@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeptoLite Pro | 100+ Items</title>
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --secondary: #ec4899;
+            --accent: #f59e0b;
+            --bg: #faf8ff;
+            --card-bg: #ffffff;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --success: #10b981;
+            --danger: #ef4444;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #faf8ff 0%, #f3e8ff 100%);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 20px 20px 25px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-radius: 0 0 24px 24px;
+            box-shadow: var(--shadow-lg);
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .logo-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            background: linear-gradient(45deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo span { color: var(--accent); }
+
+        .admin-btn {
+            font-size: 11px;
+            cursor: pointer;
+            border: 1.5px solid rgba(255,255,255,0.4);
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .admin-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .search-box {
+            background: rgba(255,255,255,0.95);
+            padding: 12px 16px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .search-box::before {
+            content: '🔍';
+            font-size: 18px;
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 15px;
+            color: var(--text);
+            background: transparent;
+        }
+
+        /* Categories */
+        .categories {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 20px 20px 15px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .categories::-webkit-scrollbar { display: none; }
+
+        .chip {
+            background: var(--card-bg);
+            padding: 10px 20px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            box-shadow: var(--shadow);
+            color: var(--text);
+        }
+
+        .chip:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.1);
+        }
+
+        .chip.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            padding: 0 20px 140px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 12px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-img-container {
+            width: 100%;
+            height: 130px;
+            border-radius: 16px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .card-img-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.1) 100%);
+        }
+
+        .card-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img-container img {
+            transform: scale(1.1);
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text);
+            height: 38px;
+            line-height: 1.3;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .price {
+            font-weight: 800;
+            font-size: 18px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 12px;
+            border: none;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(139,92,246,0.3);
+        }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(139,92,246,0.4);
+        }
+
+        .add-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Cart Bar */
+        #cart-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 18px 20px;
+            border-radius: 20px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-lg);
+            z-index: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(150%); }
+            to { transform: translateY(0); }
+        }
+
+        #cart-bar:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 24px 32px -8px rgba(0,0,0,0.2);
+        }
+
+        #cart-bar b {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: flex-end;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            padding: 30px 25px;
+            border-radius: 32px 32px 0 0;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+            animation: slideUpModal 0.4s ease;
+        }
+
+        @keyframes slideUpModal {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .modal-content h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 14px 16px;
+            margin: 8px 0 15px 0;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            box-sizing: border-box;
+            background: #f9fafb;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(139,92,246,0.1);
+        }
+
+        #orderTotal {
+            margin-bottom: 20px;
+            padding: 16px;
+            background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .btn-confirm {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(139,92,246,0.3);
+        }
+
+        .btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(139,92,246,0.4);
+        }
+
+        .btn-confirm:active {
+            transform: scale(0.98);
+        }
+
+        .btn-back {
+            width: 100%;
+            border: none;
+            background: none;
+            color: var(--text-light);
+            margin-top: 15px;
+            padding: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .btn-back:hover {
+            color: var(--text);
+        }
+
+        /* Admin View */
+        #admin-view {
+            display: none;
+            padding: 20px;
+            background: var(--bg);
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .admin-header h2 {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 2px solid var(--primary);
+            background: white;
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .order-card {
+            border: 2px solid #e5e7eb;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            background: white;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .order-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .delete-ico {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 700;
+            border: 2px solid var(--danger);
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .delete-ico:hover {
+            background: var(--danger);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .order-card b {
+            font-size: 16px;
+            color: var(--text);
+        }
+
+        .order-card small {
+            color: var(--text-light);
+            font-size: 13px;
+        }
+
+        .order-card p {
+            font-size: 12px;
+            background: #f3f4f6;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 12px 0;
+            line-height: 1.5;
+        }
+
+        .order-total {
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Responsive */
+        @media (min-width: 640px) {
+            .grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (min-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(4, 1fr);
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            header {
+                padding: 25px 40px 30px;
+            }
+            .categories {
+                padding: 20px 40px 15px;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="shop-view">
+    <header>
+        <div class="logo-row">
+            <p class="logo">ZEPTO<span>Lite</span></p>
+            <span class="admin-btn" onclick="openAdmin()">Owner Login</span>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchBox" placeholder="Search Milk, Apple, Soap..." onkeyup="search()">
+        </div>
+    </header>
+
+    <div class="categories">
+        <div class="chip active" onclick="filterBy('All', this)">All</div>
+        <div class="chip" onclick="filterBy('Dairy', this)">Dairy</div>
+        <div class="chip" onclick="filterBy('Veggies', this)">Vegetables</div>
+        <div class="chip" onclick="filterBy('Fruits', this)">Fruits</div>
+        <div class="chip" onclick="filterBy('Snacks', this)">Snacks</div>
+        <div class="chip" onclick="filterBy('Care', this)">Personal Care</div>
+    </div>
+
+    <main class="grid" id="mainGrid"></main>
+
+    <div id="cart-bar" onclick="openCheckout()">
+        <div id="cart-stats">0 Items | ₹0</div>
+        <b>View Cart →</b>
+    </div>
+</div>
+
+<div id="admin-view">
+    <div class="admin-header">
+        <h2>📦 Order Dashboard</h2>
+        <button class="logout-btn" onclick="location.reload()">Logout</button>
+    </div>
+    <div id="adminOrders">Loading...</div>
+</div>
+
+<div class="modal" id="checkoutModal">
+    <div class="modal-content">
+        <h3>🛒 Checkout</h3>
+        <input type="text" id="orderName" placeholder="Recipient Name">
+        <textarea id="orderAddr" rows="3" placeholder="Full Delivery Address"></textarea>
+        <div id="orderTotal"></div>
+        <button class="btn-confirm" id="submitOrder" onclick="placeOrderOnline()">Confirm Order</button>
+        <button class="btn-back" onclick="closeModal()">Back</button>
+    </div>
+</div>
+
+<script>
+    // --- SETUP ---
+    const DB_URL = "https://ijsyhohefhjmiafckwpg.supabase.co"; 
+    const DB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlqc3lob2hlZmhqbWlhZmNrd3BnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxMDcyMzQsImV4cCI6MjA4MTY4MzIzNH0.NbFygFpSkPUsQ1RJLLAAEUvEW6zclQLoQGMg5uXNoWo";
+    const ADMIN_PW = "admin123";
+
+    // ITEM DATABASE (100 Items)
+    const rawItems = [
+    // Dairy
+    { n: "Amul Gold Milk", c: "Dairy", i: "milk", 
+      img: "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400" },
+    { n: "Brown Bread", c: "Dairy", i: "bread", 
+      img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400" },
+    { n: "Salted Butter", c: "Dairy", i: "butter", 
+      img: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=400" },
+    { n: "Fresh Paneer", c: "Dairy", i: "cheese", 
+      img: "https://images.unsplash.com/photo-1452195100486-9cc805987862?w=400" },
+    
+    // Veggies
+    { n: "Tomato Hybrid", c: "Veggies", i: "tomato", 
+      img: "https://images.unsplash.com/photo-1546470427-227edab4e2e1?w=400" },
+    { n: "Onion Nasik", c: "Veggies", i: "onion", 
+      img: "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=400" },
+    { n: "Potato", c: "Veggies", i: "potato", 
+      img: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400" },
+    { n: "Green Chilli", c: "Veggies", i: "chilli", 
+      img: "https://images.unsplash.com/photo-1583663848850-46af132dc08e?w=400" },
+    
+    // Fruits
+    { n: "Apple Royal Gala", c: "Fruits", i: "apple", 
+      img: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400" },
+    { n: "Banana Robusta", c: "Fruits", i: "banana", 
+      img: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400" },
+    { n: "Orange Nagpur", c: "Fruits", i: "orange", 
+      img: "https://images.unsplash.com/photo-1547514701-42782101795e?w=400" },
+    { n: "Green Grapes", c: "Fruits", i: "grapes", 
+      img: "https://images.unsplash.com/photo-1599819177795-7993d87e13ca?w=400" },
+    
+    // Snacks
+    { n: "Lays Masala", c: "Snacks", i: "chips", 
+      img: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=400" },
+    { n: "Oreo Biscuits", c: "Snacks", i: "biscuits", 
+      img: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400" },
+    { n: "Dairy Milk", c: "Snacks", i: "chocolate", 
+      img: "https://images.unsplash.com/photo-1511381939415-e44015466834?w=400" },
+    { n: "Coca Cola", c: "Snacks", i: "soda", 
+      img: "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400" },
+    
+    // Personal Care
+    { n: "Dove Soap", c: "Care", i: "soap", 
+      img: "https://images.unsplash.com/photo-1585933646749-6ad89a499c1f?w=400" },
+    { n: "Colgate Paste", c: "Care", i: "toothpaste", 
+      img: "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=400" },
+    { n: "Pantene Shampoo", c: "Care", i: "shampoo", 
+      img: "https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?w=400" },
+    { n: "Nivea Lotion", c: "Care", i: "lotion", 
+      img: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400" }
+];
+
+    let allProducts = [];
+    for(let i=0; i<100; i++) {
+        let base = rawItems[i % rawItems.length];
+        allProducts.push({
+            id: i,
+            name: base.n + " " + (Math.floor(i/20) + 1),
+            category: base.c,
+            price: 20 + (i * 3),
+            img: base.img
+        });
+    }
+
+    let cart = [];
+
+    function render(list) {
+        document.getElementById('mainGrid').innerHTML = list.map(p => `
+            <div class="card">
+                <div class="card-img-container"><img src="${p.img}" loading="lazy"></div>
+                <div class="card-title">${p.name}</div>
+                <div class="price-row">
+                    <span class="price">₹${p.price}</span>
+                    <button class="add-btn" onclick="add(${p.id})">ADD</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function add(id) {
+        const item = allProducts.find(p => p.id === id);
+        cart.push(item);
+        const total = cart.reduce((s, x) => s + x.price, 0);
+        document.getElementById('cart-bar').style.display = 'flex';
+        document.getElementById('cart-stats').innerText = `${cart.length} Items | ₹${total}`;
+    }
+
+    function search() {
+        const q = document.getElementById('searchBox').value.toLowerCase();
+        render(allProducts.filter(p => p.name.toLowerCase().includes(q)));
+    }
+
+    function filterBy(cat, el) {
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
+        render(cat === 'All' ? allProducts : allProducts.filter(p => p.category === cat));
+    }
+
+    function openCheckout() {
+        document.getElementById('checkoutModal').style.display = 'flex';
+        const total = cart.reduce((s, x) => s + x.price, 0);
+        document.getElementById('orderTotal').innerText = `Total Amount: ₹${total}`;
+    }
+
+    function closeModal() { document.getElementById('checkoutModal').style.display = 'none'; }
+
+    async function placeOrderOnline() {
+        const n = document.getElementById('orderName').value;
+        const a = document.getElementById('orderAddr').value;
+        if(!n || !a) return alert("Please fill Name and Address");
+
+        document.getElementById('submitOrder').innerText = "Sending...";
+
+        const res = await fetch(`${DB_URL}/rest/v1/orders`, {
+            method: 'POST',
+            headers: { 'apikey': DB_KEY, 'Authorization': `Bearer ${DB_KEY}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                customer_name: n,
+                address: a,
+                items: cart.map(x => x.name).join(", "),
+                total_price: cart.reduce((s, x) => s + x.price, 0)
+            })
+        });
+
+        if(res.ok) { alert("Order Received!"); location.reload(); }
+    }
+
+    function openAdmin() {
+        if(prompt("Owner Password?") === ADMIN_PW) {
+            document.getElementById('shop-view').style.display = 'none';
+            document.getElementById('admin-view').style.display = 'block';
+            fetchAdminOrders();
+        }
+    }
+
+    async function fetchAdminOrders() {
+        const res = await fetch(`${DB_URL}/rest/v1/orders?select=*&order=created_at.desc`, {
+            headers: { 'apikey': DB_KEY, 'Authorization': `Bearer ${DB_KEY}` }
+        });
+        const orders = await res.json();
+        document.getElementById('adminOrders').innerHTML = orders.map(o => `
+            <div class="order-card">
+                <span class="delete-ico" onclick="delOrder(${o.id})">DELETE</span>
+                <b>👤 ${o.customer_name}</b><br>
+                <small>📍 ${o.address}</small><br>
+                <p>🛒 ${o.items}</p>
+                <span class="order-total">₹${o.total_price}</span>
+            </div>
+        `).join('');
+    }
+
+    async function delOrder(id) {
+        if(!confirm("Delete order?")) return;
+        await fetch(`${DB_URL}/rest/v1/orders?id=eq.${id}`, {
+            method: 'DELETE',
+            headers: { 'apikey': DB_KEY, 'Authorization': `Bearer ${DB_KEY}` }
+        });
+        fetchAdminOrders();
+    }
+
+    render(allProducts);
+</script>
+</body>
+</html>
